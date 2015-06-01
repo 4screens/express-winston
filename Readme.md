@@ -61,6 +61,7 @@ The logger needs to be added AFTER the express router(`app.router)`) and BEFORE 
     level: String, // log level to use, the default is "info".
     statusLevels: Boolean // different HTTP status codes caused log messages to be logged at different levels (info/warn/error), the default is false
     skip: function(req, res) // function to determine if logging is skipped, defaults to false
+    extraMeta: Object // additional meta data to pass to logger
 ```
 
 To use winston's existing transports, set `transports` to the values (as in key-value) of the `winston.default.transports` object. This may be done, for example, by using underscorejs: `transports: _.values(winston.default.transports)`.
@@ -86,6 +87,7 @@ Use `expressWinston.logger(options)` to create a middleware to log your HTTP req
       expressFormat: true, // Use the default Express/morgan request formatting, with the same colors. Enabling this will override any msg and colorStatus if true. Will only output colors on transports with colorize set to true
       colorStatus: true, // Color the status code, using the Express/morgan color palette (default green, 3XX cyan, 4XX yellow, 5XX red). Will not be recognized if expressFormat is true
       ignoreRoute: function (req, res) { return false; } // optional: allows to skip some log messages based on request and/or response
+      extraMeta: Object // additional meta data to pass to logger
     }));
 
     app.use(router); // notice how the router goes after the logger.
